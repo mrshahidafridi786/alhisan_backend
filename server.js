@@ -28,15 +28,15 @@ app.use(
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, or same-origin)
-      if (!origin) return callback(null, true);
+      // Allow all origins (including Vercel frontend, custom domains, and localhost)
       return callback(null, true);
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
     credentials: true,
   })
 );
+app.options('*', cors());
 
 // Body parsing with limits (supporting rich payloads & base64)
 app.use(express.json({ limit: '15mb' }));

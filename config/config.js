@@ -4,7 +4,9 @@ dotenv.config();
 export const config = {
   port: process.env.PORT || 5000,
   nodeEnv: process.env.NODE_ENV || 'development',
-  mongodbUri: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/alhisan',
+  mongodbUri:
+    process.env.MONGODB_URI ||
+    'mongodb+srv://alhisan:VbUdyjH76GBerI86@cluster0.7m03y0a.mongodb.net/alhisan?retryWrites=true&w=majority',
   corsOrigin: process.env.CORS_ORIGIN || '*',
   jwtSecret: process.env.JWT_SECRET || 'alhisan_executive_jwt_secret_key_2026_abudhabi_uae',
   company: {

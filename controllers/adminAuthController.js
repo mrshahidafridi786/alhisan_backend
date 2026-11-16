@@ -11,7 +11,7 @@ const generateToken = (id) => {
 
 export const adminLogin = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
 
     if (!email || !password) {
       return res.status(400).json({
@@ -20,7 +20,17 @@ export const adminLogin = async (req, res, next) => {
       });
     }
 
-    const admin = await AdminUser.findOne({ email: email.toLowerCase().trim() });
+    let admin = await AdminUser.findOne({ email: email.toLowerCase().trim() });
+
+    if (!admin) {
+      // Auto-seed default admin if database collection was not seeded
+      try {
+        await AdminUser.seedDefaultAdmin();
+        admin = await AdminUser.findOne({ email: email.toLowerCase().trim() });
+      } catch (seedErr) {
+        console.warn('[AdminLogin Seed Warning]', seedErr.message);
+      }
+    }
 
     if (!admin) {
       return res.status(401).json({
@@ -54,6 +64,7 @@ export const adminLogin = async (req, res, next) => {
       },
     });
   } catch (error) {
+    console.error('[AdminLogin Error]', error);
     next(error);
   }
 };

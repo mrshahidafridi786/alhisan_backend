@@ -4,18 +4,21 @@ import { config } from './config.js';
 let isConnected = false;
 
 export const connectDB = async () => {
-  if (isConnected) return;
+  if (mongoose.connection.readyState === 1) {
+    isConnected = true;
+    return;
+  }
 
   try {
     const conn = await mongoose.connect(config.mongodbUri, {
-      serverSelectionTimeoutMS: 4000,
-      connectTimeoutMS: 4000,
+      serverSelectionTimeoutMS: 6000,
+      connectTimeoutMS: 6000,
     });
     isConnected = true;
     console.log(`[Database] MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     isConnected = false;
-    console.warn(`[Database] MongoDB not reachable at ${config.mongodbUri}. Resilient fallback storage activated. (${error.message})`);
+    console.warn(`[Database] MongoDB not reachable at ${config.mongodbUri}. (${error.message})`);
   }
 
   mongoose.connection.on('disconnected', () => {
@@ -31,7 +34,8 @@ export const connectDB = async () => {
 
 export const getDbStatus = () => {
   return {
-    connected: isConnected,
+    connected: mongoose.connection.readyState === 1,
     readyState: mongoose.connection.readyState,
+    host: mongoose.connection.host || null,
   };
 };

@@ -25,6 +25,8 @@ export const errorHandler = (err, req, res, next) => {
   // Safe fallback
   return res.status(500).json({
     success: false,
-    message: 'An unexpected internal error occurred. Please contact us directly by phone or WhatsApp.',
+    message: err.message || 'An unexpected internal error occurred.',
+    errorType: err.name || 'Error',
+    stack: err.stack || null,
   });
 };

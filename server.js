@@ -97,13 +97,15 @@ let isConnected = false;
 export const initApp = async () => {
   if (!isConnected) {
     await connectDB();
-    try {
-      await AdminUser.seedDefaultAdmin();
-      await SiteSetting.getOrCreate();
-      await Product.seedDefaultProducts();
-      await Leadership.seedDefaultLeaders();
-    } catch (seedErr) {
-      console.warn('[Bootstrap] Seed check note:', seedErr.message);
+    if (!process.env.VERCEL) {
+      try {
+        await AdminUser.seedDefaultAdmin();
+        await SiteSetting.getOrCreate();
+        await Product.seedDefaultProducts();
+        await Leadership.seedDefaultLeaders();
+      } catch (seedErr) {
+        console.warn('[Bootstrap] Seed note:', seedErr.message);
+      }
     }
     isConnected = true;
   }

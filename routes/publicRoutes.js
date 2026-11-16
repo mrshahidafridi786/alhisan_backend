@@ -18,7 +18,6 @@ router.get('/settings', async (req, res, next) => {
 // Get public products catalog
 router.get('/products', async (req, res, next) => {
   try {
-    await Product.seedDefaultProducts();
     const products = await Product.find({ inStock: true }).sort({ order: 1 });
     res.json({ success: true, data: products });
   } catch (error) {
@@ -29,7 +28,6 @@ router.get('/products', async (req, res, next) => {
 // Get public leadership team
 router.get('/leadership', async (req, res, next) => {
   try {
-    await Leadership.seedDefaultLeaders();
     const leaders = await Leadership.find({ active: true }).sort({ order: 1 });
     res.json({ success: true, data: leaders });
   } catch (error) {

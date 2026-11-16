@@ -48,22 +48,43 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 // Trust reverse proxy (for real client IP in rate limiting & logs)
 app.set('trust proxy', 1);
 
-// Mount API Routes
-app.use('/api/contact', contactRoutes);
-app.use('/api/health', healthRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/public', publicRoutes);
+// Vercel / Proxy path normalizer
+app.use((req, res, next) => {
+  const forwardedPath = req.headers['x-matched-path'] || req.headers['x-forwarded-uri'];
+  if (forwardedPath && (req.url === '/api/index.js' || req.url === '/api')) {
+    req.url = forwardedPath;
+  }
+  next();
+});
 
-// Root fallback
-app.get('/', (req, res) => {
+// Mount API Routes (support both /api/* and root /* for Vercel rewrites)
+app.use('/api/contact', contactRoutes);
+app.use('/contact', contactRoutes);
+
+app.use('/api/health', healthRoutes);
+app.use('/health', healthRoutes);
+
+app.use('/api/admin', adminRoutes);
+app.use('/admin', adminRoutes);
+
+app.use('/api/public', publicRoutes);
+app.use('/public', publicRoutes);
+
+// Root fallback (matches /, /api, /api/index.js)
+const rootHandler = (req, res) => {
   res.json({
     name: 'Alhisan Trading Company API',
     location: 'Abu Dhabi, United Arab Emirates',
     version: '1.0.0',
     documentation: '/api/health',
     admin: '/api/admin',
+    database: 'MongoDB Atlas',
   });
-});
+};
+
+app.get('/', rootHandler);
+app.get('/api', rootHandler);
+app.get('/api/index.js', rootHandler);
 
 // Centralized error handler
 app.use(errorHandler);

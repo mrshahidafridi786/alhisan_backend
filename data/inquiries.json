@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "fb_1794584037645_auqocs",
+    "fullName": "Mohammed Al-Rashidi",
+    "email": "m.alrashidi@gulfmaterials.ae",
+    "phone": "+971 50 123 4567",
+    "companyName": "Gulf Industrial Materials LLC",
+    "subject": "Bulk Supply Quotation Request",
+    "productInterest": "Salt",
+    "message": "Please describe your requirements - including estimated quantity, preferred delivery terms (e.g. CIF, FOB), destination port, and any relevant technical parameters.",
+    "ipAddress": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.6456",
+    "status": "New",
+    "createdAt": "2026-11-13T15:33:57.645Z",
+    "updatedAt": "2026-11-13T15:33:57.645Z",
+    "fallbackStore": true
+  },
+  {
+    "_id": "fb_1794574836300_6ru3w5",
+    "fullName": "Tariq Al-Mansoor",
+    "email": "tm@gulfcommoditytraders.com",
+    "phone": "+971501234567",
+    "companyName": "Gulf Commodity Traders LLC",
+    "subject": "Bulk Soda Ash Dense Quotation Request",
+    "productInterest": "Soda Ash",
+    "message": "We require pricing terms for 2,500 MT of Dense Soda Ash delivered CIF Jebel Ali Port or Khalifa Port Abu Dhabi.",
+    "ipAddress": "::1",
+    "userAgent": "Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.19041.6456",
+    "status": "New",
+    "createdAt": "2026-11-13T13:00:36.300Z",
+    "updatedAt": "2026-11-13T13:00:36.300Z",
+    "fallbackStore": true
+  }
+]

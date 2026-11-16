@@ -43,7 +43,10 @@ app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
 // Static directory for uploaded product and category images
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+const staticUploadsDir = process.env.VERCEL
+  ? path.join('/tmp', 'uploads')
+  : path.join(process.cwd(), 'uploads');
+app.use('/uploads', express.static(staticUploadsDir));
 
 // Trust reverse proxy (for real client IP in rate limiting & logs)
 app.set('trust proxy', 1);

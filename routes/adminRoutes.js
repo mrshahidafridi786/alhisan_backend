@@ -27,10 +27,17 @@ import { protectAdmin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Ensure uploads folder exists
-const uploadsDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+// Ensure uploads folder exists (using /tmp on serverless environments)
+const uploadsDir = process.env.VERCEL
+  ? path.join('/tmp', 'uploads')
+  : path.join(process.cwd(), 'uploads');
+
+try {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+} catch (dirErr) {
+  console.warn('[Uploads Directory]', dirErr.message);
 }
 
 // Multer Storage Configuration

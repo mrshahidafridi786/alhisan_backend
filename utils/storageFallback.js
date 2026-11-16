@@ -4,12 +4,18 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const dataDir = path.resolve(__dirname, '../data');
+const dataDir = process.env.VERCEL
+  ? path.join('/tmp', 'data')
+  : path.resolve(__dirname, '../data');
 const inquiriesFile = path.join(dataDir, 'inquiries.json');
 
 // Ensure directory exists
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+try {
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+  }
+} catch (dirErr) {
+  console.warn('[Fallback Storage Dir]', dirErr.message);
 }
 
 export const saveInquiryFallback = (data) => {

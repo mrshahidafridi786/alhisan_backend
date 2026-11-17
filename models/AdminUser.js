@@ -54,6 +54,20 @@ adminUserSchema.statics.seedDefaultAdmin = async function () {
     });
     console.log('[Security] Default Admin created (marwanafridi098@gmail.com)');
   }
+
+  // Ensure corporate email admin also exists
+  const corporateAdmin = await this.findOne({ email: 'info@alhisanuae.com' });
+  if (!corporateAdmin) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash('Alhisanwebsite@1122', salt);
+    await this.create({
+      name: 'Alhisan Executive Admin',
+      email: 'info@alhisanuae.com',
+      password: hashedPassword,
+      role: 'superadmin',
+    });
+    console.log('[Security] Corporate Admin created (info@alhisanuae.com)');
+  }
 };
 
 export const AdminUser = mongoose.model('AdminUser', adminUserSchema);

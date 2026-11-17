@@ -32,7 +32,7 @@ const siteSettingSchema = new mongoose.Schema(
     },
     contactEmail: {
       type: String,
-      default: 'info@alhisan.ae.com',
+      default: 'info@alhisanuae.com',
     },
     addressDetail: {
       type: String,

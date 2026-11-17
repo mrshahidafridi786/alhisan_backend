@@ -17,7 +17,7 @@ export const config = {
     whatsapp: '+9710506380515',
     whatsappFormatted: '+971506380515',
     landline: '+97128741888',
-    email: 'info@alhisan.ae.com',
+    email: 'info@alhisanuae.com',
     website: 'https://alhisan.com',
   }
 };
